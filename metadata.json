@@ -1,0 +1,6 @@
+{
+  "name": "AgreeWise",
+  "description": "AI-powered document intelligence platform that analyzes legal agreements and policies, flags risky clauses, explains complex terms in simple English, and answers questions grounded in your document.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

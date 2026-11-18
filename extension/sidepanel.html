@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgreeWise Side Panel</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div class="panel-shell">
+      <!-- Top Bar -->
+      <header class="panel-header">
+        <div class="brand-row">
+          <div class="logo-box" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1>AgreeWise</h1>
+            <p id="header-doc-meta" class="meta-line">AI Policy Screening</p>
+          </div>
+        </div>
+        <button type="button" id="btn-open-full-web" class="web-btn hidden">
+          Open Full Analysis
+        </button>
+      </header>
+
+      <!-- Empty State -->
+      <section id="state-empty" class="state-card">
+        <h2>Analyze any policy or terms page</h2>
+        <p>
+          Click below to inspect the active website for automatic renewals, hidden fees, privacy
+          sharing, and arbitration clauses.
+        </p>
+        <button type="button" id="btn-analyze-active" class="primary-btn">
+          Analyze Current Page
+        </button>
+      </section>
+
+      <!-- Loading State -->
+      <section id="state-loading" class="state-card hidden">
+        <div class="spinner" aria-hidden="true"></div>
+        <h2>Analyzing document...</h2>
+        <p id="loading-doc-name">
+          Reviewing clauses in plain English with AgreeWise AI.
+        </p>
+      </section>
+
+      <!-- Error State -->
+      <section id="state-error" class="state-card error-card hidden" role="alert">
+        <h2>Could not analyze this page</h2>
+        <p id="error-message"></p>
+        <div class="error-actions">
+          <button type="button" id="btn-retry-analyze" class="primary-btn">Try Again</button>
+          <button type="button" id="btn-error-open-web" class="secondary-btn">
+            Open AgreeWise Web Workspace
+          </button>
+        </div>
+      </section>
+
+      <!-- Results Container -->
+      <main id="results-container" class="results-stack hidden">
+        <div class="disclaimer-box">
+          Informational AI screening only — not legal advice.
+        </div>
+
+        <!-- Risk Indicator -->
+        <section class="card">
+          <div class="risk-header">
+            <div>
+              <p class="section-kicker">AI-Generated Risk Indicator</p>
+              <p id="risk-label" class="risk-label">—</p>
+            </div>
+            <div class="risk-score-box">
+              <span id="risk-score" class="risk-score">0</span><span class="risk-max">/100</span>
+            </div>
+          </div>
+          <div class="progress-track">
+            <div id="risk-bar" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <p id="risk-note" class="muted-note"></p>
+        </section>
+
+        <!-- Priority Breakdown -->
+        <section class="priority-grid" aria-label="Priority Breakdown">
+          <button type="button" class="priority-card high" data-filter="High">
+            <span class="p-label">High</span>
+            <span id="count-high" class="p-count">0</span>
+          </button>
+          <button type="button" class="priority-card medium" data-filter="Medium">
+            <span class="p-label">Medium</span>
+            <span id="count-medium" class="p-count">0</span>
+          </button>
+          <button type="button" class="priority-card low" data-filter="Low">
+            <span class="p-label">Low</span>
+            <span id="count-low" class="p-count">0</span>
+          </button>
+        </section>
+
+        <!-- Document Summary -->
+        <section class="card">
+          <h2 class="section-title">Document Summary</h2>
+          <div id="summary-paragraphs" class="summary-body"></div>
+        </section>
+
+        <!-- Important Clauses -->
+        <section class="section-block">
+          <div class="clauses-header">
+            <h2 class="section-title">Important Clauses (<span id="clauses-count">0</span>)</h2>
+            <button type="button" id="btn-reset-filter" class="link-btn hidden">Show All</button>
+          </div>
+          <div id="clauses-list" class="clauses-list"></div>
+        </section>
+
+        <!-- Privacy Analysis -->
+        <section class="card">
+          <h2 class="section-title">Privacy Analysis</h2>
+          <div id="privacy-list" class="privacy-list"></div>
+        </section>
+
+        <!-- Suggested Questions -->
+        <section class="card">
+          <h2 class="section-title">What You Should Check</h2>
+          <ul id="checklist-items" class="checklist"></ul>
+        </section>
+
+        <!-- Ask AgreeWise AI -->
+        <section class="card chat-card">
+          <h2 class="section-title">Ask AgreeWise AI</h2>
+          <p class="muted-note">
+            Ask a question answered strictly from this webpage&apos;s extracted text.
+          </p>
+
+          <div class="suggested-chips" id="suggested-chips">
+            <button type="button" class="chip-btn">Can this company share my data?</button>
+            <button type="button" class="chip-btn">Will I be charged automatically?</button>
+            <button type="button" class="chip-btn">How can I cancel?</button>
+            <button type="button" class="chip-btn">What happens if I close my account?</button>
+          </div>
+
+          <div id="chat-history" class="chat-history">
+            <p class="chat-empty">Ask a question below to inspect specific terms.</p>
+          </div>
+
+          <div id="chat-error" class="chat-error hidden" role="alert"></div>
+
+          <form id="chat-form" class="chat-form">
+            <input
+              id="chat-input"
+              type="text"
+              placeholder="Ask about this document..."
+              autocomplete="off"
+            />
+            <button type="submit" id="chat-send-btn" class="send-btn">Send</button>
+          </form>
+        </section>
+
+        <!-- Bottom CTA to Web Dashboard -->
+        <button type="button" id="btn-open-full-web-bottom" class="primary-btn full-width-btn">
+          Open Full Analysis on AgreeWise Website
+        </button>
+      </main>
+    </div>
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgreeWise Extension</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup-shell">
+      <header class="header">
+        <div class="brand">
+          <div class="logo-box" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-name">AgreeWise</h1>
+            <p class="brand-sub">AI Document Intelligence</p>
+          </div>
+        </div>
+        <button type="button" id="open-dashboard-top" class="link-btn">Dashboard</button>
+      </header>
+
+      <section class="card domain-card">
+        <div class="domain-row">
+          <span class="domain-label">Current Website</span>
+          <span id="site-status" class="status-text">Checking page...</span>
+        </div>
+        <p id="current-domain" class="domain-value">—</p>
+      </section>
+
+      <div id="error-box" class="error-box hidden" role="alert"></div>
+
+      <section class="actions-stack">
+        <button type="button" id="btn-analyze-page" class="primary-btn">
+          Analyze Current Page
+        </button>
+
+        <div class="quick-grid">
+          <button type="button" id="btn-privacy-analyzer" class="secondary-btn">
+            Privacy Policy Analyzer
+          </button>
+          <button type="button" id="btn-terms-analyzer" class="secondary-btn">
+            Terms &amp; Conditions Analyzer
+          </button>
+        </div>
+
+        <button type="button" id="btn-open-dashboard" class="outline-btn">
+          Open AgreeWise Dashboard
+        </button>
+      </section>
+
+      <section class="settings-section">
+        <button type="button" id="toggle-settings" class="settings-toggle">
+          <span>Server Connection</span>
+          <span id="settings-chevron">Show</span>
+        </button>
+        <div id="settings-panel" class="settings-panel hidden">
+          <label for="server-url-input" class="input-label">AgreeWise Backend URL</label>
+          <div class="input-row">
+            <input
+              id="server-url-input"
+              type="url"
+              placeholder="https://your-agreewise-app.run.app"
+            />
+            <button type="button" id="save-server-url" class="save-btn">Save</button>
+          </div>
+          <p id="save-feedback" class="save-feedback"></p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Pages are only analyzed when you click Analyze. Informational only, not legal advice.
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
