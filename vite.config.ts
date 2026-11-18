@@ -25,6 +25,24 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
           }
+          // Publish the Chrome extension source plus a file index so the
+          // /api/extension/download endpoint can zip it on Netlify, where
+          // the repo's extension/ folder isn't on the server's disk.
+          const extSrc = path.resolve(__dirname, 'extension');
+          const extDist = path.resolve(distDir, 'extension-files');
+          if (fs.existsSync(distDir) && fs.existsSync(extSrc)) {
+            fs.cpSync(extSrc, extDist, {recursive: true, force: true});
+            const files: string[] = [];
+            const walk = (dir: string, prefix: string) => {
+              for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+                const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+                if (entry.isDirectory()) walk(path.join(dir, entry.name), rel);
+                else if (entry.isFile()) files.push(rel);
+              }
+            };
+            walk(extSrc, '');
+            fs.writeFileSync(path.join(extDist, 'index.json'), JSON.stringify(files));
+          }
         },
       },
     ],
