@@ -14,7 +14,7 @@ import type {
   RiskLevel,
 } from '../src/types/analysis.ts';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const apiDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 // Static copy of the extension published with the site (see vite.config.ts).
 // Used when the extension source folder is not on disk, e.g. on Netlify.
@@ -271,7 +271,7 @@ export function createApp() {
         }
       };
 
-      const extDir = [path.resolve(process.cwd(), 'extension'), path.resolve(__dirname, '..', 'extension')].find(
+      const extDir = [path.resolve(process.cwd(), 'extension'), path.resolve(apiDirectory, '..', 'extension')].find(
         (dir) => fs.existsSync(dir)
       );
 
