@@ -8,7 +8,7 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import { createApp } from './api/app.ts';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const serverDirectory = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
 
 async function startServer() {
@@ -22,7 +22,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.resolve(__dirname, 'dist');
+    const distPath = path.resolve(serverDirectory, 'dist');
     app.use(express.static(distPath));
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
